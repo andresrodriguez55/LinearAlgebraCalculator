@@ -1,0 +1,56 @@
+*
+{
+    list-style: none;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+html, body
+{
+    height:100%;
+    width:100%;
+    padding:0;
+    margin:0;
+
+    background-image: url("images\\pb.jpg");
+    background-size: 50% 100%;
+}
+
+html
+{
+    background-color: #a35e5e1a;
+}
+
+#header
+{
+    padding: 10px;
+    background-image: url("images\\nb.jpg");
+    background-size: 40% 100%;
+}
+
+
+.bar 
+{
+    background-color: #1f54a3cb;
+    overflow: hidden;
+}
+
+.bar a 
+{
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 10px 17px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+.bar a:hover 
+{
+    background-color: rgba(173, 159, 159, 0.548);
+}
+  
+#SolutionArea
+{
+    height:65%;
+    width:100%;
+}

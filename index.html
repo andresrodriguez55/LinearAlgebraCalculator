@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <link rel="stylesheet" type="text/css" href="index.css">
+      <script src="script.js"></script>    
+        
+      <script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    </head>
+
+    <body>
+        <div id="header">
+          <h1 id="headerTitle"  style="color:#1f54a3c9;">Linear Algebra Calculator</h1>
+        </div>
+
+        <div class="bar">
+          <a onclick="changeButtonAction('Determinant')">Determinant</a>
+          <a onclick="changeButtonAction('Inverse')">Inverse</a>
+          <a onclick="changeButtonAction('Power')">Power</a>
+          <a onclick="changeButtonAction('Orthogonal')">Check if it's Orthogonal</a>
+          <a onclick="changeButtonAction('Solve')">System of Equations Solver</a>
+          <a onclick="changeButtonAction('Adjoint')">Adjoint</a>
+        </div>
+      
+        <table id="tableOfAll" width="100%" border=1 style="background-color: #1f54a386;">
+          <tr>
+            <td>
+              <table id="tableOfValues">
+                <tr>
+                    <td><input type='number' step="any" id="cell0x0" style="width:90%" /></td>
+                    <td><input type="number" step="any" id="cell0x1" style="width:90%" /></td>
+                </tr>
+                
+                <tr>
+                  <td><input type="number" step="any" id="cell1x0" style="width:90%" /></td>
+                  <td><input type="number" step="any" id="cell1x1" style="width:90%" /></td>
+                </tr>
+              </table>
+            </td>
+
+            <td id="tdEquationsInputArea" style="display: none; padding-top: 20px; padding-bottom: 20px; width: 100%;">
+              <table>
+                <tr style="height:25px;">
+                  <td style="width: 75%;"><input type="text" id="EquationsInputArea" style="width: 90%;"></td>
+                  <td><p style="font-size: 67%;">* Equations must be separated by commas (,).<br>
+                    <br>* Variables must be lowercase letters of the English alphabet.</p></td>   
+                </tr>
+                    
+              </table>
+            </td>
+
+
+            <td width="5%">
+              <table id="upDownTable">
+                <tr><td><button type="button" onclick="incrementSize()">&#8593 Increase</button></td></tr>
+                <tr><td><button type="button" onclick="decreaseSize()">&#8595 Reduce</button></td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+  
+        <button id="calculate_button" type="button" onclick="builtTheArray()">Calculate The Determinant</button>
+        <td><input type="number" id="power_input" style="width:5%;visibility: hidden;"/>
+
+        <br><br>
+        <span id="SolutionArea" style="font-size:70%"></span>
+
+    </body>
+</html>
