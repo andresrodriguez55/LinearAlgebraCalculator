@@ -2,11 +2,12 @@ var n=2;
 var arr=[];
 var actual_operation="Determinant";
 var mathjax_result="";
+var size_of_matrices_to_be_multiplied=[2, 2, 2, 2];
 
 function incrementSize()
 {
     n++;
-    updateHtmlTable();
+    updateSquareMatrix();
 }
 
 function decreaseSize()
@@ -17,10 +18,10 @@ function decreaseSize()
         return;
     }
     n--;
-    updateHtmlTable();
+    updateSquareMatrix();
 }
 
-function changeButtonAction(operation_name) //Optimizar!
+function changeButtonAction(operation_name) //Optimizar...
 {
     document.getElementById("calculate_button").innerHTML="Calculate The "+operation_name;
     
@@ -31,29 +32,44 @@ function changeButtonAction(operation_name) //Optimizar!
         document.getElementById("tableOfValues").style["display"]="block";
         document.getElementById("tdEquationsInputArea").style["display"]="none";
         document.getElementById("upDownTable").style["display"]="block";
+        document.getElementsByClassName("multiplicationInputs")[0].style["display"]="none";
+        document.getElementsByClassName("multiplicationInputs")[1].style["display"]="none"; 
     }
 
-    else if(operation_name=="Solve")
+    else if(operation_name=="Values of System of Equations")
     {
         document.getElementById("power_input").style["visibility"]="hidden";
         document.getElementById("tableOfValues").style["display"]="none";
         document.getElementById("tdEquationsInputArea").style["display"]="block";
         document.getElementById("upDownTable").style["display"]="none";
+        document.getElementsByClassName("multiplicationInputs")[0].style["display"]="none";
+        document.getElementsByClassName("multiplicationInputs")[1].style["display"]="none"; 
     }
 
-    else
+    else if(operation_name!="Matrix Multiplication")
     {
         document.getElementById("power_input").style["visibility"]="hidden"; 
         document.getElementById("tableOfValues").style["display"]="block"; 
         document.getElementById("tdEquationsInputArea").style["display"]="none";  
-        document.getElementById("upDownTable").style["display"]="block";       
+        document.getElementById("upDownTable").style["display"]="block";      
+        document.getElementsByClassName("multiplicationInputs")[0].style["display"]="none";
+        document.getElementsByClassName("multiplicationInputs")[1].style["display"]="none"; 
+    }
+
+    else
+    {
+        document.getElementsByClassName("multiplicationInputs")[0].style["display"]="block";
+        document.getElementsByClassName("multiplicationInputs")[1].style["display"]="block";
+        document.getElementById("power_input").style["visibility"]="hidden"; 
+        document.getElementById("tableOfValues").style["display"]="none"; 
+        document.getElementById("tdEquationsInputArea").style["display"]="none";  
+        document.getElementById("upDownTable").style["display"]="none";
     }
         
-
     actual_operation=operation_name;
 }
 
-function updateHtmlTable()
+function updateSquareMatrix()
 {
     let row_html="";
     for(let x=0; x<n; x++)
@@ -80,11 +96,11 @@ function actual_array_to_mathjax(array, obtional_arr=false)
 
     for(let i=0; i<array.length; i++)
     {
-        for(let j=0; j<array.length; j++)
-            mathjax_result+=array[i][j].toString()+" & ";
+        for(let j=0; j<array[0].length; j++)
+            mathjax_result+=(array[i][j]).toString()+" & ";
         
         if(obtional_arr!=false)
-            for(let k=0; k<array.length; k++)
+            for(let k=0; k<array[0].length; k++)
                 mathjax_result+=obtional_arr[i][k].toString()+" & ";
         mathjax_result=mathjax_result.substring(0, mathjax_result.length-2)+"\\\\";
     }
@@ -106,11 +122,11 @@ function interchange_row_mathjax(pivot_row, interchange_index)
                         "}}\\end{equation}";
 }
 
-function builtTheArray()
+function doCalculations()
 {
     mathjax_result="";
 
-    if(actual_operation!="Solve")
+    if(actual_operation!="Values of System of Equations" && actual_operation!="Matrix Multiplication")
     {
         arr=[];
 
@@ -144,11 +160,12 @@ function builtTheArray()
             calculateAdjoint(arr);
     }
 
-    else
-    { 
+    else if(actual_operation=="Values of System of Equations")
         solveSoE(document.getElementById("EquationsInputArea").value);
-    }
-      
+ 
+    else
+        calculateTheMatrixMultiplication();
+        
     document.getElementById("SolutionArea").innerHTML = mathjax_result;
     MathJax.Hub.Typeset();
 }
@@ -872,4 +889,126 @@ function calculateAdjoint(array)
 
     mathjax_result="$$Adjoint=C^{T}$$";
     actual_array_to_mathjax(result_arr)
+}
+
+function changeSizeOfMatricesToBeMultiplied(arr_with_data) // [0-4, 0-1]
+{                                                          /* First index represents if a change will be 
+                                                              made in the number of columns or rows of 
+                                                              matrix1 or matrix2.
+                                                              
+                                                              Second index represents if the selected item 
+                                                              will be increased or decreased.*/
+    if(arr_with_data[0]==1 || arr_with_data[0]==2)
+    {
+        if(arr_with_data[1]==0)
+        {
+            if(size_of_matrices_to_be_multiplied[1]==1)
+                return;
+
+            size_of_matrices_to_be_multiplied[1]--;
+            size_of_matrices_to_be_multiplied[2]--;
+        }
+            
+        else
+        {
+            size_of_matrices_to_be_multiplied[1]++;
+            size_of_matrices_to_be_multiplied[2]++;
+        }
+        
+    }
+
+    else if(arr_with_data[0]==0)
+    {
+        if(arr_with_data[1]==0)
+        {
+            if(size_of_matrices_to_be_multiplied[0]==1)
+                return;
+
+            size_of_matrices_to_be_multiplied[0]--;
+        }
+            
+        else
+            size_of_matrices_to_be_multiplied[0]++;
+    }
+
+    else
+    {
+        if(arr_with_data[1]==0)
+        {
+            if(size_of_matrices_to_be_multiplied[3]==1)
+                return;
+
+            size_of_matrices_to_be_multiplied[3]--;
+        }
+            
+        else
+            size_of_matrices_to_be_multiplied[3]++;
+    }
+
+    updateMatricesToBeMultiplied();
+}
+
+function updateMatricesToBeMultiplied()
+{
+    let matrix1_html="";
+    let matrix2_html="";
+
+    for(let x=0; x<size_of_matrices_to_be_multiplied[0]; x++)
+    {
+        matrix1_html+="<tr>";
+        for(let y=0; y<size_of_matrices_to_be_multiplied[1]; y++)
+        {
+            matrix1_html+="<td><input type='number' step='any' id='cellOfFirstMatrix"+
+                x.toString()+"x"+y.toString()+"' "+"style='width:"+(90).toString()+"%' /></td>";
+        }
+        matrix1_html+="</tr>";
+    }
+
+    for(let x=0; x<size_of_matrices_to_be_multiplied[2]; x++)
+    {
+        matrix2_html+="<tr>";
+        for(let y=0; y<size_of_matrices_to_be_multiplied[3]; y++)
+        {
+            matrix2_html+="<td><input type='number' step='any' id='cellOfSecondMatrix"+
+                x.toString()+"x"+y.toString()+"' "+"style='width:"+(90).toString()+"%' /></td>";
+        }
+        matrix2_html+="</tr>";
+    }
+
+    document.getElementById("multiplicationInputs1").innerHTML=matrix1_html;
+    document.getElementById("multiplicationInputs2").innerHTML=matrix2_html;
+}
+
+function calculateTheMatrixMultiplication()
+{
+    let temp_sum, temp_value, value_of_matrix1, value_of_matrix2, result_arr;
+    result_arr=[];
+
+    for(let matrix1_row=0; matrix1_row<size_of_matrices_to_be_multiplied[0]; matrix1_row++)
+    {
+        result_arr[matrix1_row]=[];
+
+        for(let matrix2_column=0; matrix2_column<size_of_matrices_to_be_multiplied[3]; matrix2_column++)
+        {
+            temp_sum=0;
+
+            for(let matrix1_column=0; matrix1_column<size_of_matrices_to_be_multiplied[1]; matrix1_column++)
+            {
+                temp_value=parseFloat( document.getElementById("cellOfFirstMatrix"+(matrix1_row).toString()+"x"+(matrix1_column).toString()).value)*
+                    parseFloat(document.getElementById("cellOfSecondMatrix"+(matrix1_column).toString()+"x"+(matrix2_column).toString()).value);
+
+                if(isNaN(temp_value))
+                {
+                    window.alert("Matrix can't contain empty cells!");
+                    return "";
+                }
+
+                temp_sum+=temp_value;
+            }
+
+            result_arr[matrix1_row][matrix2_column]=temp_sum;
+        }        
+    }
+
+    actual_array_to_mathjax(result_arr);
 }
