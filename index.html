@@ -22,12 +22,13 @@
           <a onclick="changeButtonAction('Inverse')">Inverse</a>
           <a onclick="changeButtonAction('Power')">Power</a>
           <a onclick="changeButtonAction('Orthogonal')">Check if it's Orthogonal</a>
-          <a onclick="changeButtonAction('Solve')">System of Equations Solver</a>
+          <a onclick="changeButtonAction('Values of System of Equations')">System of Equations Solver</a>
           <a onclick="changeButtonAction('Adjoint')">Adjoint</a>
+          <a onclick="changeButtonAction('Matrix Multiplication')">Multiplication</a>
         </div>
       
         <table id="tableOfAll" width="100%" border=1 style="background-color: #1f54a386;">
-          <tr>
+          <tr id="row">
             <td>
               <table id="tableOfValues">
                 <tr>
@@ -61,9 +62,108 @@
               </table>
             </td>
           </tr>
+
+          <tr class="multiplicationInputs" style="display: none;" width="100%">
+            <td width="95%">
+              <p style="color:white">Matrix 1</p>
+              <table id="multiplicationInputs1">
+                <tr>
+                    <td><input type='number' step="any" id="cellOfFirstMatrix0x0" style="width:90%" /></td>
+                    <td><input type="number" step="any" id="cellOfFirstMatrix0x1" style="width:90%" /></td>
+                </tr>
+                
+                <tr>
+                  <td><input type="number" step="any" id="cellOfFirstMatrix1x0" style="width:90%" /></td>
+                  <td><input type="number" step="any" id="cellOfFirstMatrix1x1" style="width:90%" /></td>
+                </tr>
+              </table>
+            </td>
+
+            <td width="5%">
+              <table>
+                <tr>
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([0, 0])">
+                      &#8595 Decrease Row
+                    </button>
+                  </td>
+
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([0, 1])">
+                      &#8593 Increase Row
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([1, 0])">
+                      &#8592 Decrease Column
+                    </button>
+                  </td>
+
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([1, 1])">
+                      &#8594 Increase Column
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr class="multiplicationInputs" style="display: none;" width="100%">
+            <td width="95%">
+              <p style="color:white;" >Matrix 2</p>
+              <table id="multiplicationInputs2">
+                <tr>
+                    <td><input type='number' step="any" id="cellOfSecondMatrix0x0" style="width:90%" /></td>
+                    <td><input type="number" step="any" id="cellOfSecondMatrix0x1" style="width:90%" /></td>
+                </tr>
+                
+                <tr>
+                  <td><input type="number" step="any" id="cellOfSecondMatrix1x0" style="width:90%" /></td>
+                  <td><input type="number" step="any" id="cellOfSecondMatrix1x1" style="width:90%" /></td>
+                </tr>
+              </table>
+            </td>
+
+            <td width="5%">
+              <table>
+                <tr>
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([2, 0])">
+                      &#8595 Decrease Row
+                    </button>
+                  </td>
+
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([2, 1])">
+                      &#8593 Increase Row
+                    </button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([3, 0])">
+                      &#8592 Decrease Column
+                    </button>
+                  </td>
+
+                  <td>
+                    <button type="button" onclick="changeSizeOfMatricesToBeMultiplied([3, 1])">
+                      &#8594 Increase Column
+                    </button>
+                  </td>
+                </tr>  
+              </table>
+            </td>
+          </tr>
+
         </table>
+
   
-        <button id="calculate_button" type="button" onclick="builtTheArray()">Calculate The Determinant</button>
+        <button id="calculate_button" type="button" onclick="doCalculations()">Calculate The Determinant</button>
         <td><input type="number" id="power_input" style="width:5%;visibility: hidden;"/>
 
         <br><br>
