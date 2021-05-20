@@ -6,14 +6,14 @@ Link: https://andresrodriguez55.github.io/LinearAlgebraCalculator/
 
 ## Screenshots
 
-| ![](images/1.png) | ![](images/2.png) | 
+| ![](images/a.png) | ![](images/b.png) | 
 |:---:|:---:|
 
-![](images/3.png) | ![](images/4.png) |
+![](images/c.png) | ![](images/d.png) |
 |:---:|:---:|
 
-![](images/5.png) | ![](images/6.png) |
+![](images/e.png) | ![](images/f.png) |
 |:---:|:---:|
 
-![](images/7.png) |
+![](images/g.png) |
 |:---:|
